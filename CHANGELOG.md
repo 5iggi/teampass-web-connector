@@ -8,3 +8,5 @@
 - Repository link included in extension metadata and user interfaces.
 - MPL-2.0 license and GitHub community files added.
 - Network-auth display now decodes HTML character entities and repairs common UTF-8/Windows-1252 mojibake in website titles, realms, entry labels, usernames, and URLs.
+- Network-auth now decodes named HTML entities such as `&uuml;`, numeric entities, and repeatedly encoded entities.
+- Content scripts stop cleanly when the browser invalidates the extension context after an update or reload.

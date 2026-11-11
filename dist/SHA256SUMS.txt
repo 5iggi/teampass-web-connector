@@ -1,3 +1,3 @@
-6fc621400f397d39aeefa7558468eae1e1b4f1bd0d41ae9b2829587650b5390b  teampass-web-connector-chromium-1.0.0.zip
-7849c467ddc78b6891f9a1231072db09c772c30aa4a9e22588819f5eac51d648  teampass-web-connector-firefox-1.0.0.xpi
-4fa592b9809147c80486ac7adc13d5a8a5c9d0bcda219b00d82d19e9c5b2584f  teampass-web-connector-safari-source-1.0.0.zip
+be5671edc36ad0269adf65aa24212b3f7ec11a3fd2cdbd379683bdc8a6e8b013  teampass-web-connector-chromium-1.0.0.zip
+089ca8417aff6d15dccb7f3fdb80fc16e162c1f24a35e8e31abf9d4deeb5f7ea  teampass-web-connector-firefox-1.0.0.xpi
+6e98d76b16832da9703869ed4e8fef373b2d77678d5af81676e342fb28d3274f  teampass-web-connector-safari-source-1.0.0.zip
