@@ -1,0 +1,2 @@
+c6c2d731e7a8e02f8812df3f32ab1e138417f3d27855506af855c3727675af5d  teampass-web-connector-chromium-1.0.0.zip
+b69668f82f54ef4b1d77f16767faacdf26f94a8f4486374b28b70917242503a7  teampass-web-connector-firefox-1.0.0.xpi

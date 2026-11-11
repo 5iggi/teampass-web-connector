@@ -1,0 +1,391 @@
+{
+  "extensionName": {
+    "message": "TeamPass API Connector"
+  },
+  "extensionDescription": {
+    "message": "Inoffizieller TeamPass-3.2-API-Connector für URL-Suche und Autofill."
+  },
+  "unlock": {
+    "message": "Entsperren"
+  },
+  "lock": {
+    "message": "Sperren"
+  },
+  "cancel": {
+    "message": "Abbrechen"
+  },
+  "save": {
+    "message": "Speichern"
+  },
+  "settings": {
+    "message": "Einstellungen"
+  },
+  "all": {
+    "message": "Alle"
+  },
+  "loading": {
+    "message": "Lade …"
+  },
+  "locked": {
+    "message": "Gesperrt"
+  },
+  "unlocked": {
+    "message": "Entsperrt"
+  },
+  "setupSecurity": {
+    "message": "Sicherheit einrichten"
+  },
+  "extensionLocked": {
+    "message": "Erweiterung ist gesperrt."
+  },
+  "searchPlaceholder": {
+    "message": "Einträge filtern"
+  },
+  "saveDetected": {
+    "message": "Neuen Eintrag hinzufügen / erkannte Daten speichern"
+  },
+  "httpLogin": {
+    "message": "HTTP-Basic-Anmeldung"
+  },
+  "website": {
+    "message": "Website"
+  },
+  "realm": {
+    "message": "Bereich"
+  },
+  "selectEntry": {
+    "message": "TeamPass-Eintrag auswählen"
+  },
+  "enterCredentials": {
+    "message": "Zugangsdaten eingeben"
+  },
+  "username": {
+    "message": "Benutzername"
+  },
+  "password": {
+    "message": "Passwort"
+  },
+  "loginRemember": {
+    "message": "Anmelden und zum Speichern vormerken"
+  },
+  "suppressSession": {
+    "message": "Für diese Sitzung nicht mehr fragen"
+  },
+  "cancel30": {
+    "message": "Abbrechen (30 Sekunden)"
+  },
+  "noStoredEntry": {
+    "message": "Kein Eintrag im synchronisierten HTTP-Basic-Cache gefunden. Zugangsdaten unten eingeben."
+  },
+  "vaultLocked": {
+    "message": "TeamPass ist gesperrt"
+  },
+  "enterMaster": {
+    "message": "Lokale Master-Passphrase eingeben, um fortzufahren."
+  },
+  "matches": {
+    "message": "$COUNT$ passende Einträge",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "entriesFound": {
+    "message": "$COUNT$ Einträge gefunden",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "noEntries": {
+    "message": "Keine passenden Einträge."
+  },
+  "add": {
+    "message": "Hinzufügen"
+  },
+  "fill": {
+    "message": "Mit TeamPass ausfüllen"
+  },
+  "connectionSuccess": {
+    "message": "Verbindung erfolgreich."
+  },
+  "savedSuccess": {
+    "message": "Einstellungen wurden gespeichert."
+  },
+  "unknownError": {
+    "message": "Unbekannter Fehler"
+  },
+  "unlocking": {
+    "message": "Entsperre …"
+  },
+  "unlockFailed": {
+    "message": "Entsperren fehlgeschlagen."
+  },
+  "usernameInserted": {
+    "message": "Benutzername eingefügt. Passwort wird im nächsten Schritt automatisch ergänzt."
+  },
+  "passwordInserted": {
+    "message": "Passwort für den zweiten Anmeldeschritt eingefügt."
+  },
+  "currentCredentials": {
+    "message": "Aktuell erkannte Zugangsdaten übernehmen"
+  },
+  "storageLocation": {
+    "message": "Speicherort: $LOCATION$",
+    "placeholders": {
+      "location": {
+        "content": "$1"
+      }
+    }
+  },
+  "addEntry": {
+    "message": "Hinzufügen"
+  },
+  "updateEntry": {
+    "message": "Aktualisieren"
+  },
+  "newEntry": {
+    "message": "In TeamPass speichern?"
+  },
+  "folderFilter": {
+    "message": "Ordner filtern"
+  },
+  "newSubfolder": {
+    "message": "Unterordner"
+  },
+  "expandAll": {
+    "message": "Alle aufklappen"
+  },
+  "collapseAll": {
+    "message": "Alle zuklappen"
+  },
+  "generate": {
+    "message": "Erzeugen"
+  },
+  "notSave": {
+    "message": "Nicht speichern"
+  },
+  "securityHeading": {
+    "message": "Sicherheit"
+  },
+  "masterPassphraseLabel": {
+    "message": "Lokale Master-Passphrase"
+  },
+  "masterPassphrasePlaceholder": {
+    "message": "Mindestens 8 Zeichen"
+  },
+  "lockNow": {
+    "message": "Jetzt sperren"
+  },
+  "connectionHeading": {
+    "message": "Verbindung"
+  },
+  "serverUrlLabel": {
+    "message": "Server-URL"
+  },
+  "authModeLabel": {
+    "message": "Anmeldeart"
+  },
+  "passwordAccountOption": {
+    "message": "Lokales/LDAP-Konto"
+  },
+  "tokenOption": {
+    "message": "Persönlicher Zugriffstoken"
+  },
+  "apiKeyLabel": {
+    "message": "API-Schlüssel"
+  },
+  "teampassPasswordLabel": {
+    "message": "TeamPass-Kennwort"
+  },
+  "automationHeading": {
+    "message": "Automatisierung und Verhalten"
+  },
+  "cacheMinutesLabel": {
+    "message": "Cache-Aktualisierung alle Minuten"
+  },
+  "testConnection": {
+    "message": "Verbindung testen"
+  },
+  "testUrl": {
+    "message": "URL-Zuordnung testen"
+  },
+  "showLog": {
+    "message": "Diagnoseprotokoll anzeigen"
+  },
+  "syncCache": {
+    "message": "HTTP-Basic-Zugangsdaten synchronisieren"
+  },
+  "cacheStatus": {
+    "message": "Cache-Status"
+  },
+  "saveSettings": {
+    "message": "Einstellungen speichern"
+  },
+  "folderDepthLabel": {
+    "message": "Maximale Ordner-Suchtiefe, 0 = alle Ebenen"
+  },
+  "selfTestHeading": {
+    "message": "Tests und Diagnose"
+  },
+  "apiSelfTest": {
+    "message": "API-Selbsttest ausführen"
+  },
+  "apiSelfTestNote": {
+    "message": "Nur lesende Prüfungen; keine Einträge oder Ordner werden verändert."
+  },
+  "selfTestRunning": {
+    "message": "API-Selbsttest läuft …"
+  },
+  "selfTestPassed": {
+    "message": "API-Selbsttest erfolgreich"
+  },
+  "selfTestFailed": {
+    "message": "API-Selbsttest fehlgeschlagen"
+  },
+  "securityNote": {
+    "message": "API-Schlüssel, TeamPass-Kennwort und PAT werden mit AES-256-GCM verschlüsselt. Die Passphrase wird nicht gespeichert."
+  },
+  "autoCacheLabel": {
+    "message": "HTTP-Basic-Treffer sitzungsbezogen merken; vollständige Synchronisierung optional"
+  },
+  "lockMinutesLabel": {
+    "message": "Automatisch sperren nach Minuten, 0 = nur Browserende"
+  },
+  "autoSavePromptLabel": {
+    "message": "Speicherdialog nach erkannter Anmeldung automatisch anzeigen"
+  },
+  "pendingBadgeLabel": {
+    "message": "Erweiterungssymbol bei vorgemerkten Zugangsdaten mit ! markieren"
+  },
+  "collapseFoldersLabel": {
+    "message": "Ordnerbaum zunächst einklappen"
+  },
+  "behaviorHeading": {
+    "message": "Anzeige und Sicherheit"
+  },
+  "itemUrlLabel": {
+    "message": "TeamPass-Eintrags-URL-Vorlage"
+  },
+  "clipboardLabel": {
+    "message": "Zwischenablage löschen nach Sekunden, 0 = nie"
+  },
+  "passwordLengthLabel": {
+    "message": "Länge erzeugter Passwörter"
+  },
+  "httpHeading": {
+    "message": "HTTP-Basic/.htaccess"
+  },
+  "httpEnabledLabel": {
+    "message": "HTTP-Basic/.htaccess-Anmeldungen automatisch mit TeamPass befüllen"
+  },
+  "testUrlLabel": {
+    "message": "Test-URL für HTTP-Basic-Zuordnung"
+  },
+  "targetFolderFound": {
+    "message": "Zielordner gefunden"
+  },
+  "targetFolderMissing": {
+    "message": "Zielordner nicht gefunden"
+  },
+  "maxDepth": {
+    "message": "Maximale Tiefe"
+  },
+  "deepestPath": {
+    "message": "Tiefster Ordnerpfad"
+  },
+  "flexibleChooserLabel": {
+    "message": "Anzeige der erkannten Einträge flexibel verschieben und Position merken"
+  },
+  "diagnosticShowDetails": {
+    "message": "Details anzeigen"
+  },
+  "diagnosticHideDetails": {
+    "message": "Details ausblenden"
+  },
+  "cacheSyncRunning": {
+    "message": "HTTP-Basic-Zugangsdaten werden synchronisiert …"
+  },
+  "autoFillCredentialsLabel": {
+    "message": "Zugangsdaten automatisch befüllen"
+  },
+  "submitAfterSelectionLabel": {
+    "message": "Nach Auswahl absenden"
+  },
+  "urlMatchModeLabel": {
+    "message": "URL-Trefferregel"
+  },
+  "urlMatchHost": {
+    "message": "Exakte URL, danach gleicher Server"
+  },
+  "urlMatchSite": {
+    "message": "Exakte URL, gleicher Server, danach Hauptdomain"
+  },
+  "saveTitle": {
+    "message": "In TeamPass speichern?"
+  },
+  "updateTitle": {
+    "message": "TeamPass-Eintrag aktualisieren"
+  },
+  "existingForUrl": {
+    "message": "Für diese URL sind Einträge vorhanden"
+  },
+  "existingHint": {
+    "message": "Eintrag wählen. Danach können bestehende Daten verwendet oder die aktuell erkannten Zugangsdaten übernommen werden."
+  },
+  "titleLabel": {
+    "message": "Titel"
+  },
+  "loginLabel": {
+    "message": "Benutzername / E-Mail"
+  },
+  "foldersLoading": {
+    "message": "Lade Ordner …"
+  },
+  "foldersUnavailable": {
+    "message": "Keine beschreibbaren Ordner verfügbar."
+  },
+  "foldersRateLimited": {
+    "message": "TeamPass-Anfragelimit erreicht. Neuer Versuch in $SECONDS$ Sekunden.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1"
+      }
+    }
+  },
+  "folderLoadFailed": {
+    "message": "Ordner konnten nicht geladen werden."
+  },
+  "urlMatchExact": {
+    "message": "Exakte URL"
+  },
+  "urlMatchHint": {
+    "message": "Der Hauptdomain-Modus kann auch Einträge anderer Subdomains anzeigen, zum Beispiel www.cineplex.de und auth.cineplex.de."
+  },
+  "noEntriesLive": {
+    "message": "Keine passenden Einträge gefunden. Die gezielte TeamPass-Suche wurde ausgeführt."
+  },
+  "searchingTeamPass": {
+    "message": "TeamPass wird gezielt für diese Website durchsucht …"
+  },
+  "unlockToSearch": {
+    "message": "Zum Durchsuchen von TeamPass bitte entsperren."
+  },
+  "credentialsPassing": {
+    "message": "Zugangsdaten werden an den Browser übergeben …"
+  },
+  "transferFailed": {
+    "message": "Übergabe fehlgeschlagen."
+  },
+  "proxyLogin": {
+    "message": "Proxy-Anmeldung"
+  },
+  "protectedArea": {
+    "message": "Geschützter Webseitenbereich"
+  },
+  "untitled": {
+    "message": "(ohne Titel)"
+  }
+}

@@ -1,0 +1,12 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');const ctx={};vm.createContext(ctx);vm.runInContext(fs.readFileSync('src/field-policy.js','utf8'),ctx);const p=ctx.TP_FIELD_POLICY;
+const meta=(o={})=>({type:'text',name:'',id:'',autocomplete:'',placeholder:'',ariaLabel:'',testId:'',...o});
+const context=(o={})=>({hasPassword:false,hasTextarea:false,contactFieldCount:0,actionText:'',formAction:'',...o});
+assert.equal(p.allowUsername(meta({name:'name'}),context({hasTextarea:true,actionText:'Senden'})),false,'contact name excluded');
+assert.equal(p.allowUsername(meta({type:'email',name:'email'}),context({hasTextarea:true,contactFieldCount:2,actionText:'Nachricht senden'})),false,'contact email excluded');
+assert.equal(p.allowUsername(meta({type:'search',name:'query'}),context({actionText:'Suchen'})),false,'search excluded');
+assert.equal(p.allowUsername(meta({id:'search-term',placeholder:'Suchbegriff eingeben'}),context()),false,'search page excluded');
+assert.equal(p.allowUsername(meta({autocomplete:'username',type:'email'}),context()),true,'two-step autocomplete username allowed');
+assert.equal(p.allowUsername(meta({id:'input-username',testId:'input-username'}),context({actionText:'Weiter'})),true,'two-step username allowed');
+assert.equal(p.allowUsername(meta({name:'login'}),context({hasPassword:true})),true,'classic login allowed');
+assert.equal(p.classify(meta({type:'password'})),'password');
+console.log('Field policy tests: PASS (8 assertions)');

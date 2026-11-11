@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="style.css">
+  <title>TeamPass API Connector</title>
+</head>
+<body class="options">
+<h1>TeamPass API Connector</h1>
+<form id="form">
+  <section class="settings-section">
+    <h2><span data-i18n="securityHeading">Security</span></h2>
+    <label><span data-i18n="masterPassphraseLabel">Local master passphrase</span><input id="masterPassphrase" type="password" minlength="8" data-i18n-placeholder="masterPassphrasePlaceholder" placeholder="At least 8 characters"></label>
+    <p class="warning"><span data-i18n="securityNote">Secrets are encrypted with AES-256-GCM. The passphrase is not stored.</span></p>
+    <div class="button-row"><button type="button" id="unlockVault"><span data-i18n="unlock">Unlock</span></button><button type="button" id="lockVault"><span data-i18n="lockNow">Lock now</span></button><span id="vaultState"></span></div>
+  </section>
+
+  <section class="settings-section">
+    <h2><span data-i18n="connectionHeading">Connection</span></h2>
+    <label><span data-i18n="serverUrlLabel">Server URL</span><input id="serverUrl" type="url" required placeholder="https://teampass.example.test"></label>
+    <label><span data-i18n="username">Username</span><input id="login" required autocomplete="username"></label>
+    <label><span data-i18n="authModeLabel">Authentication type</span><select id="authMode"><option value="password" data-i18n="passwordAccountOption">Local/LDAP account</option><option value="token" data-i18n="tokenOption">Personal access token</option></select></label>
+    <div id="passwordFields">
+      <label><span data-i18n="apiKeyLabel">API key</span><input id="apiKey" type="password" autocomplete="off"></label>
+      <label><span data-i18n="teampassPasswordLabel">TeamPass password</span><input id="password" type="password" autocomplete="current-password"></label>
+    </div>
+    <div id="tokenFields" hidden><label><span data-i18n="tokenOption">Personal access token</span><input id="pat" type="password" autocomplete="off"></label></div>
+    <div class="button-row"><button type="button" id="test"><span data-i18n="testConnection">Test connection</span></button><button type="submit"><span data-i18n="saveSettings">Save settings</span></button></div><output id="status" hidden></output>
+  </section>
+
+  <section class="settings-section">
+    <h2><span data-i18n="automationHeading">Automation and behavior</span></h2>
+    <label class="check"><input id="autoCacheEnabled" type="checkbox"><span data-i18n="autoCacheLabel">Automatically update HTTP Basic cache after unlock and changes</span></label>
+    <label><span data-i18n="cacheMinutesLabel">Cache update interval in minutes</span><input id="cacheRefreshMinutes" type="number" min="5" max="240"></label>
+    <label><span data-i18n="lockMinutesLabel">Auto-lock after minutes, 0 = browser exit only</span><input id="vaultLockMinutes" type="number" min="0" max="480"></label>
+    <label class="check"><input id="autoSavePrompt" type="checkbox"><span data-i18n="autoSavePromptLabel">Automatically show save dialog after detected login</span></label>
+    <label class="check"><input id="showPendingBadge" type="checkbox"><span data-i18n="pendingBadgeLabel">Mark extension icon with ! for pending credentials</span></label>
+    <label class="check"><input id="collapseFolders" type="checkbox"><span data-i18n="collapseFoldersLabel">Initially collapse folder tree</span></label>
+    <label class="check"><input id="flexibleChooser" type="checkbox"><span data-i18n="flexibleChooserLabel">Allow moving the detected entries window and remember its position</span></label>
+    <label class="check"><input id="autoFillCredentials" type="checkbox"><span data-i18n="autoFillCredentialsLabel">Zugangsdaten automatisch befüllen</span></label>
+    <label class="check"><input id="submitAfterSelection" type="checkbox"><span data-i18n="submitAfterSelectionLabel">Nach Auswahl absenden</span></label>
+    <label><span data-i18n="folderDepthLabel">Maximum folder search depth, 0 = all levels</span><input id="folderSearchDepth" type="number" min="0" max="99" value="0"></label>
+    <label><span data-i18n="urlMatchModeLabel">URL-Trefferregel</span><select id="urlMatchMode"><option value="exact" data-i18n="urlMatchExact">Exact URL</option><option value="host" data-i18n="urlMatchHost">Exact URL, then same server</option><option value="site" data-i18n="urlMatchSite">Exact URL, same server, then main domain</option></select><small data-i18n="urlMatchHint">The main-domain mode may also show entries from other subdomains.</small></label>
+  </section>
+
+  <section class="settings-section">
+    <h2><span data-i18n="behaviorHeading">Display and security</span></h2>
+    <label><span data-i18n="itemUrlLabel">TeamPass item URL template</span><input id="itemUrlTemplate" placeholder="/index.php?page=items&amp;group={folder_id}&amp;id={id}"></label>
+    <label><span data-i18n="clipboardLabel">Clear clipboard after seconds, 0 = never</span><input id="clipboardClearSeconds" type="number" min="0" max="600"></label>
+    <label><span data-i18n="passwordLengthLabel">Generated password length</span><input id="passwordLength" type="number" min="12" max="64"></label>
+  </section>
+
+  <section class="settings-section">
+    <h2><span data-i18n="httpHeading">HTTP Basic/.htaccess</span></h2>
+    <label class="check"><input id="httpAuthEnabled" type="checkbox"><span data-i18n="httpEnabledLabel">Automatically fill HTTP Basic/.htaccess logins with TeamPass</span></label>
+    <label><span data-i18n="testUrlLabel">Test URL for HTTP Basic matching</span><input id="httpAuthTestUrl" type="url" placeholder="https://server.example.test/protected/"></label>
+    <div class="button-row diagnostic-actions"><button type="button" id="httpAuthTest"><span data-i18n="testUrl">Test URL matching</span></button><button type="button" id="httpAuthLog"><span data-i18n="showLog">Show diagnostic log</span></button><button type="button" id="httpAuthCacheBuild"><span data-i18n="syncCache">Synchronize HTTP Basic credentials</span></button><button type="button" id="httpAuthCacheStatus"><span data-i18n="cacheStatus">Cache status</span></button><button type="button" id="apiSelfTest"><span data-i18n="apiSelfTest">Run API self-test</span></button></div>
+    <p class="diagnostic-note"><span data-i18n="apiSelfTestNote">Runs read-only API checks. No entries or folders are changed.</span></p>
+    <div id="diagnosticOutput" class="diagnostic-output" aria-live="polite"></div>
+    <pre id="httpAuthOutput" hidden></pre><pre id="apiSelfTestOutput" hidden></pre>
+  </section>
+
+  <div class="bottom-actions button-row"><button type="button" id="testBottom"><span data-i18n="testConnection">Test connection</span></button><button type="submit" id="saveBottom"><span data-i18n="saveSettings">Save settings</span></button></div><output id="statusBottom" hidden></output>
+
+</form>
+<script src="i18n.js"></script><script src="options.js"></script>
+<footer class="project-footer"><a href="https://github.com/5iggi/teampass-web-connector" target="_blank" rel="noopener noreferrer" title="https://github.com/5iggi/teampass-web-connector">Project repository / Projekt-Repository</a><span>Version 1.0.0 · MPL-2.0</span></footer></body></html>
