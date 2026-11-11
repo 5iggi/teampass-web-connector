@@ -1,6 +1,6 @@
 # Technische Dokumentation
 
-**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
+**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
 
 ---
 
@@ -39,6 +39,6 @@ Die Erweiterung ist eine WebExtension mit Manifest V3. Popup und Optionsseite se
 Node-Tests in `tests/` prüfen API-Schicht, Feldregeln, Ordnerlogik und mehrstufige Anmeldung. Python-Prüfungen validieren Optionen und Quellstruktur. `python3 build.py --check` führt alle Prüfungen ohne Paketbau aus.
 
 ---
-**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
+**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
 
 ---

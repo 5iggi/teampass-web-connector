@@ -52,7 +52,9 @@ Use HTTPS and a dedicated least-privilege TeamPass account. Never publish passwo
 
 ## Documentation / Dokumentation
 - [Documentation entry / Doku-Einstieg](docs/README.md)
-- [Build Chromium, Edge, Firefox and Safari](docs/en/build.md)
+- [Safari/macOS build guide, Xcode signing and testing](docs/en/safari.md)
+- [Safari/macOS-Bauanleitung, Xcode-Signierung und Tests](docs/de/safari.md)
+- [Build Chromium, Edge and Firefox](docs/en/build.md)
 - [Technical architecture](docs/en/technical.md)
 - [Technischer Aufbau](docs/de/technical.md)
 

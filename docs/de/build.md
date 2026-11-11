@@ -1,6 +1,6 @@
 # Erweiterungen aus den Quellen erstellen
 
-**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
+**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
 
 ---
 
@@ -36,6 +36,6 @@ xcrun safari-web-extension-packager dist/chromium \
 Safari ist ein optionales Portierungsziel. Netzwerk-Authentifizierung, Berechtigungen und alle Kernabläufe müssen auf einem Mac separat getestet werden; ein automatisch signierbares Safari-Paket kann außerhalb von Xcode/Apple Developer nicht erzeugt werden.
 
 ---
-**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
+**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
 
 ---

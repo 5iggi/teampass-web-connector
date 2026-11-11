@@ -1,6 +1,6 @@
 # Sicherheit und Datenschutz
 
-**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
+**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
 
 ---
 
@@ -18,6 +18,6 @@ Einstellungen liegen im Browser-Extension-Speicher. Geheimnisse werden nur entsp
 Keine Sicherheitsdetails in öffentlichen Issues. GitHub Security Advisories verwenden und Protokolle vorher von Tokens, Kennwörtern, Cookies, internen URLs und personenbezogenen Daten bereinigen. Siehe `SECURITY.md`.
 
 ---
-**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
+**Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
 
 ---

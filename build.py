@@ -4,7 +4,7 @@ import argparse,json,shutil,subprocess,sys,zipfile
 ROOT=Path(__file__).resolve().parent
 VERSION=(ROOT/'VERSION').read_text().strip()
 DIST=ROOT/'dist'
-TESTS=['test-api-layer.js','test-field-policy.js','test-folder-depth.js','test-folder-permissions.js','test-two-step-login.js']
+TESTS=['test-api-layer.js','test-field-policy.js','test-folder-depth.js','test-folder-permissions.js','test-two-step-login.js','test-network-auth-encoding.js']
 def run_checks():
     for script in TESTS: subprocess.run(['node',str(ROOT/'tests'/script)],check=True)
     for script in ['validate_api_layer.py','validate_options.py']: subprocess.run([sys.executable,str(ROOT/script)],check=True)
