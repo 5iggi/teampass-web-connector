@@ -218,7 +218,28 @@ async function tpCreateFolder(d){const body=TP_API.folderCreateBody(d);const res
 async function tpStoreDraft(id,d){await pcall(tpSession.set.bind(tpSession),{[tpPendingKey(id)]:d});const c=await settings();if(c.showPendingBadge&&api.action){await pcall(api.action.setBadgeText.bind(api.action),{tabId:id,text:'!'});await pcall(api.action.setTitle.bind(api.action),{tabId:id,title:'TeamPass: Zugangsdaten erkannt'});try{await pcall(api.action.setIcon.bind(api.action),{tabId:id,path:{16:'icons/icon16-pending.png',32:'icons/icon32-pending.png',48:'icons/icon48-pending.png',128:'icons/icon128-pending.png'}})}catch{}}}
 async function tpLoadDraft(id){const x=await pcall(tpSession.get.bind(tpSession),{[tpPendingKey(id)]:null});return x[tpPendingKey(id)];}
 async function tpShowDraft(id){const d=await tpLoadDraft(id);if(!d)return false;const tab=await pcall(api.tabs.get.bind(api.tabs),id);if(!tab||!/^https?:\/\//i.test(tab.url||'')||tab.status==='unloaded')return false;try{await pcall(api.tabs.sendMessage.bind(api.tabs),id,{type:'showSavePrompt',draft:d});return true}catch{if(api.scripting?.executeScript){await pcall(api.scripting.executeScript.bind(api.scripting),{target:{tabId:id},files:['content.js']});await pcall(api.tabs.sendMessage.bind(api.tabs),id,{type:'showSavePrompt',draft:d});return true}return false}}
-if(api.tabs?.onUpdated)api.tabs.onUpdated.addListener((id,info)=>{if(info.status==='complete')setTimeout(async()=>{const c=await settings();if(c.autoSavePrompt)tpShowDraft(id).catch(()=>{})},400)});
+if(api.tabs?.onUpdated){
+  api.tabs.onUpdated.addListener((tabId,changeInfo)=>{
+    if(changeInfo.status!=='complete')return;
+    setTimeout(()=>{
+      void (async()=>{
+        try{
+          const cfg={...DEFAULTS,...await storageGet(DEFAULTS)};
+          if(!cfg.autoSavePrompt)return;
+          const draft=await tpLoadDraft(tabId);
+          if(!draft)return;
+          const state=await vaultState();
+          if(state.configured&&state.locked)return;
+          await tpShowDraft(tabId);
+        }catch(error){
+          const message=String(error?.message||error||'');
+          if(/gesperrt|locked|context invalidated/i.test(message))return;
+          console.warn('TeamPass: automatic save prompt failed:',error);
+        }
+      })();
+    },400);
+  });
+}
 
 
 const httpAuthMemory={};const httpAuthSession=api.storage.session||{set:async o=>Object.assign(httpAuthMemory,o),get:async defaults=>Object.fromEntries(Object.entries(defaults).map(([k,v])=>[k,k in httpAuthMemory?httpAuthMemory[k]:v])),remove:async key=>{delete httpAuthMemory[key]}};
@@ -265,7 +286,18 @@ if(api.webRequest?.onAuthRequired){api.webRequest.onAuthRequired.addListener((de
 function scheduleCacheRefresh(cfg){if(!api.alarms)return;api.alarms.clear('httpAuthCacheRefresh').catch(()=>{});if(cfg.autoCacheEnabled&&Number(cfg.cacheRefreshMinutes)>0)api.alarms.create('httpAuthCacheRefresh',{periodInMinutes:Math.max(5,Number(cfg.cacheRefreshMinutes))});}
 async function runAutomaticHttpAuthSync(trigger='alarm'){const cfg={...DEFAULTS,...await storageGet(DEFAULTS)},vs=await vaultState();if(!cfg.autoCacheEnabled||vs.locked)return secureSession.set({httpAuthAutoSync:{ok:false,time:Date.now(),error:'skipped:'+trigger}});try{const result=await buildHttpAuthCacheReliable();await secureSession.set({httpAuthAutoSync:{ok:true,time:Date.now(),trigger,result}});return result}catch(error){await secureSession.set({httpAuthAutoSync:{ok:false,time:Date.now(),trigger,error:error.message}});throw error}}
 if(api.alarms)api.alarms.onAlarm.addListener(alarm=>{if(alarm.name==='vaultAutoLock')handleVaultAutoLock().catch(()=>{});if(alarm.name==='httpAuthCacheRefresh')secureSession.set({httpAuthAutoSync:{ok:true,time:Date.now(),result:{skipped:true,reason:'full-scan-disabled'}}}).catch(()=>{});});
-api.runtime.onStartup?.addListener(async()=>{await lockVault();const cfg={...DEFAULTS,...await storageGet(DEFAULTS)};scheduleCacheRefresh(cfg);if(api.action)api.action.setBadgeText({text:'L'}).catch(()=>{});});
+api.runtime.onStartup?.addListener(()=>{
+  void (async()=>{
+    try{
+      await lockVault();
+      const cfg={...DEFAULTS,...await storageGet(DEFAULTS)};
+      scheduleCacheRefresh(cfg);
+      if(api.action)await pcall(api.action.setBadgeText.bind(api.action),{text:'L'}).catch(()=>{});
+    }catch(error){
+      console.warn('TeamPass: startup initialization failed:',error);
+    }
+  })();
+});
 
 
 api.runtime.onConnect?.addListener(port=>{if(!port.name.startsWith('vault-ui:'))return;const token=`${port.name}:${Math.random()}`;activeVaultUi.add(token);touchVaultActivity().catch(()=>{});const ping=port.onMessage?.addListener(()=>touchVaultActivity().catch(()=>{}));port.onDisconnect.addListener(()=>{activeVaultUi.delete(token);touchVaultActivity().catch(()=>{})});});

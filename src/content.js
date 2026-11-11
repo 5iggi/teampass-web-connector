@@ -1,5 +1,21 @@
 const t=(k,...a)=>(globalThis.tpI18n?.t?.(k,...a)??k);
 const api=globalThis.browser??globalThis.chrome;
+let tpContextStopped=false;
+let tpPeriodicTimer=0;
+const tpObservers=new Set();
+function tpIsContextError(error){return /extension context invalidated|context invalidated|message port closed|receiving end does not exist/i.test(String(error?.message||error||''))}
+function tpContextAvailable(){try{return !tpContextStopped&&Boolean(api?.runtime?.id)}catch{return false}}
+function tpStopContentRuntime(){
+  if(tpContextStopped)return;
+  tpContextStopped=true;
+  if(tpPeriodicTimer){clearInterval(tpPeriodicTimer);tpPeriodicTimer=0;}
+  if(tpAutoFillTimer){clearTimeout(tpAutoFillTimer);tpAutoFillTimer=0;}
+  for(const observer of tpObservers){try{observer.disconnect()}catch{}}
+  tpObservers.clear();
+  for(const id of ['__tp_marker','__tp_chooser_host','__tp_unlock','__tp_save','__tp_toast'])document.getElementById(id)?.remove();
+}
+function tpHandleAsyncError(error){if(tpIsContextError(error)||!tpContextAvailable()){tpStopContentRuntime();return true}console.warn('TeamPass content script:',error);return false}
+addEventListener('unhandledrejection',event=>{if(tpIsContextError(event.reason)||!tpContextAvailable()){event.preventDefault();tpStopContentRuntime();}},true);
 function visible(el){try{const r=el.getBoundingClientRect(),s=getComputedStyle(el);return r.width>0&&r.height>0&&s.visibility!=='hidden'&&s.display!=='none'}catch{return false}}
 function deepRoots(root=document,out=[]){out.push(root);for(const el of root.querySelectorAll?.('*')||[]){if(el.shadowRoot)deepRoots(el.shadowRoot,out)}return out}
 function deepInputs(){const out=[];for(const root of deepRoots())for(const el of root.querySelectorAll?.('input')||[])out.push(el);return out}
@@ -57,10 +73,10 @@ function marker(){
 }
 let tpPendingRunning=false,tpPendingDone=false;
 async function tryPendingFill(){if(tpPendingRunning||tpPendingDone)return;tpPendingRunning=true;try{const r=await new Promise(resolve=>api.runtime.sendMessage({type:'pendingFillGet'},resolve)),pending=r?.pending;if(!pending||pending.origin!==location.origin)return;const f=fields();if(f.password){if(f.username&&!f.username.readOnly&&!f.username.value)setValue(f.username,pending.item.login||pending.item.email||'');setValue(f.password,pending.item.pwd||'');const behavior=await behaviorSettings();if(behavior.submitAfterSelection)setTimeout(submitDetectedForm,120);tpPendingDone=true;await new Promise(resolve=>api.runtime.sendMessage({type:'pendingFillClear'},resolve));toast('Passwort für den zweiten Anmeldeschritt eingefügt.');}}finally{tpPendingRunning=false}}
-api.runtime.onMessage.addListener((msg,_sender,sendResponse)=>{if(msg.type==='fill')sendResponse(fill(msg.item));else if(msg.type==='showSavePrompt'){tpSavePrompt(msg.draft);sendResponse({ok:true});}else if(msg.type==='captureNow'){let d=null;for(const f of document.forms){d=tpCapture(f);if(d)break}if(!d)d={label:document.title||location.hostname,login:fields().username?.value||'',email:'',password:fields().password?.value||'',url:location.href,description:'',mode:'create'};sendResponse({ok:true,draft:d});}});
+if(tpContextAvailable())api.runtime.onMessage.addListener((msg,_sender,sendResponse)=>{if(msg.type==='fill')sendResponse(fill(msg.item));else if(msg.type==='showSavePrompt'){tpSavePrompt(msg.draft);sendResponse({ok:true});}else if(msg.type==='captureNow'){let d=null;for(const f of document.forms){d=tpCapture(f);if(d)break}if(!d)d={label:document.title||location.hostname,login:fields().username?.value||'',email:'',password:fields().password?.value||'',url:location.href,description:'',mode:'create'};sendResponse({ok:true,draft:d});}});
 
 let tpAutoFillKey='',tpAutoFillBusy=false,tpAutoFillTimer=0;const tpAutoFillState=new Map();
-function scheduleAutomaticFill(delay=120){clearTimeout(tpAutoFillTimer);tpAutoFillTimer=setTimeout(()=>maybeAutomaticFill(),delay)}
+function scheduleAutomaticFill(delay=120){if(!tpContextAvailable())return tpStopContentRuntime();clearTimeout(tpAutoFillTimer);tpAutoFillTimer=setTimeout(()=>{void maybeAutomaticFill().catch(tpHandleAsyncError)},delay)}
 async function maybeAutomaticFill(){
   if(tpAutoFillBusy)return;
   const behavior=await behaviorSettings();if(!behavior.autoFillCredentials)return;
@@ -79,7 +95,8 @@ async function maybeAutomaticFill(){
     else tpAutoFillState.set(key,{status:'fill-failed',until:Date.now()+5000});
   }finally{tpAutoFillBusy=false}
 }
-function observeRoots(){for(const root of deepRoots())if(!root.__tpObserved){root.__tpObserved=true;new MutationObserver(()=>{marker();observeRoots();scheduleAutomaticFill(180)}).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['type','autocomplete','readonly','disabled']})}}marker();observeRoots();scheduleAutomaticFill(80);setInterval(()=>{marker();tryPendingFill()},500);
+function observeRoots(){if(!tpContextAvailable())return tpStopContentRuntime();for(const root of deepRoots())if(!root.__tpObserved){root.__tpObserved=true;const observer=new MutationObserver(()=>{if(!tpContextAvailable())return tpStopContentRuntime();marker();observeRoots();scheduleAutomaticFill(180)});observer.observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['type','autocomplete','readonly','disabled']});tpObservers.add(observer)}}
+marker();observeRoots();scheduleAutomaticFill(80);tpPeriodicTimer=setInterval(()=>{if(!tpContextAvailable())return tpStopContentRuntime();try{marker();void tryPendingFill().catch(tpHandleAsyncError)}catch(error){tpHandleAsyncError(error)}},500);
 
 function tpCapture(form){const f=fields();if(!f.password?.value)return null;const u=f.username?.value||'',mail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(u);return{label:document.title||location.hostname,login:mail?'':u,email:mail?u:'',password:f.password.value,url:location.origin+location.pathname,description:`Vom Browser gespeichert am ${new Date().toLocaleString()}`};}
 function tpSubmit(e){const form=e.target instanceof HTMLFormElement?e.target:e.target?.closest?.('form');if(!form)return;const d=tpCapture(form);if(d)api.runtime.sendMessage({type:'credentialsSubmitted',draft:d});}
