@@ -2,40 +2,56 @@
 
 **Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
 
----
+## Voraussetzungen
 
-## Reproduzierbarer Build
-Voraussetzung: Python 3.10+ und Node.js 18+. Im Repository-Stamm:
+- Python 3.10 oder neuer
+- Node.js 18 oder neuer
+- Git
+- für Safari zusätzlich macOS und Xcode
+
+## Prüfungen
+
+Im Repository-Stamm:
 
 ```bash
 python3 build.py --check
+```
+
+Die Prüfung umfasst API-Verträge, Feldregeln, Ordnerlogik, zweistufige Anmeldung, HTTP-Basic-Zeichenkodierung, Optionsseite und Internationalisierung.
+
+Der i18n-Test kann separat gestartet werden:
+
+```bash
+node tests/test-i18n-completeness.js
+```
+
+Der Test verlangt identische Schlüssel in Deutsch und Englisch und erkennt bekannte fest codierte deutsche UI-Texte außerhalb der Sprachdateien.
+
+## Reproduzierbarer Build
+
+```bash
 python3 build.py
 ```
 
-Ergebnisse: `dist/teampass-web-connector-chromium-1.0.0.zip`, `dist/teampass-web-connector-firefox-1.0.0.xpi` und entpackte Verzeichnisse für lokale Tests.
+Ergebnisse:
 
-## Chromium/Edge
-Das ZIP enthält `manifest.chromium.json` als `manifest.json` plus `src/`. Für Store-Uploads das ZIP verwenden; für lokale Tests `dist/chromium` laden.
+```text
+dist/teampass-web-connector-chromium-1.0.0.zip
+dist/teampass-web-connector-firefox-1.0.0.xpi
+dist/chromium/
+dist/firefox/
+```
+
+## Chromium und Microsoft Edge
+
+Für lokale Tests `dist/chromium` unter `chrome://extensions` beziehungsweise `edge://extensions` mit **Entpackte Erweiterung laden** auswählen. Nach einem Neuaufbau bereits geöffnete Webseiten einmal aktualisieren.
 
 ## Firefox
-Das XPI ist technisch ein ZIP mit Firefox-Manifest. Eine dauerhafte Installation erfordert normalerweise eine Signatur über Mozilla Add-ons; für Entwicklung `about:debugging` verwenden.
+
+Für Entwicklung `about:debugging#/runtime/this-firefox` öffnen und `dist/firefox/manifest.json` als temporäres Add-on laden. Eine dauerhafte öffentliche Installation erfordert normalerweise eine Signatur über Mozilla Add-ons.
 
 ## Safari unter macOS
-1. Zuerst den Chromium-Build erzeugen.
-2. Xcode auf dem Mac installieren.
-3. Ausführen:
-```bash
-xcrun safari-web-extension-packager dist/chromium \
-  --project-location safari-build \
-  --app-name "TeamPass Web Connector" \
-  --bundle-identifier "io.github.5iggi.teampass-web-connector" \
-  --swift --macos-only --copy-resources
-```
-4. Projekt in Xcode öffnen, Signing Team auswählen, bauen und in Safari unter **Einstellungen → Erweiterungen** aktivieren.
 
-Safari ist ein optionales Portierungsziel. Netzwerk-Authentifizierung, Berechtigungen und alle Kernabläufe müssen auf einem Mac separat getestet werden; ein automatisch signierbares Safari-Paket kann außerhalb von Xcode/Apple Developer nicht erzeugt werden.
+Die vollständige Anleitung steht unter [Safari-Erweiterung unter macOS erstellen](safari.md). Das Xcode-Projekt muss auf macOS erstellt, signiert und separat getestet werden.
 
----
 **Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
-
----

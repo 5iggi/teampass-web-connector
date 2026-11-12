@@ -2,43 +2,79 @@
 
 **Menu:** [Home](README.md) · [Installation](installation.md) · [Usage](user-guide.md) · [Build](build.md) · [Safari](safari.md) · [Technical](technical.md) · [Security](security.md) · [Troubleshooting](troubleshooting.md) · [Deutsch](../de/README.md)
 
----
-
 ## Architecture
-The extension is a Manifest V3 WebExtension. Popup and options pages send messages to the background process. The background process owns configuration and vault state, calls TeamPass through `teampass-api.js`, and communicates with the active page content script. Separate manifests and the `browser`/`chrome` abstraction handle browser differences.
 
-## Files
+TeamPass Web Connector is a Manifest V3 WebExtension. The popup and options page communicate with the background process through runtime messages. The background process owns configuration, vault state, API calls, HTTP Basic requests, and session caches. The content script discovers form fields and renders page-level dialogs.
+
+## Internationalization
+
+All user-visible text belongs in:
+
+```text
+src/_locales/de/messages.json
+src/_locales/en/messages.json
+```
+
+English is defined as `default_locale` in the manifests. `src/i18n.js` provides `tpI18n.t()` and applies `data-i18n` and `data-i18n-placeholder` to static HTML elements. Dynamically generated dialogs also use translation keys exclusively.
+
+Placeholders are resolved through the WebExtension i18n API, for example:
+
+```javascript
+tpI18n.t('matches', count)
+tpI18n.t('storageLocation', folderName)
+tpI18n.t('errorPrefix', errorMessage)
+```
+
+When adding UI text, update both locale files. User-visible German or English strings must not be hard-coded directly in JavaScript.
+
+## Content-script lifecycle
+
+When an extension is updated or reloaded, an already injected content script loses its extension context. `content.js` detects this state, stops timers and MutationObservers, and removes its UI elements. Refresh the tab afterwards so the new content script can be injected.
+
+A locked vault is a normal operating state. Automatic save handling reads only non-secret options from `storage.local`; API access and the save dialog are deferred until the vault is unlocked.
+
+## Key files
+
 | File | Responsibility |
 |---|---|
 | `background-loader.js` | Chromium service-worker loader |
-| `background.js` | central message, session, vault, search, save and network-auth orchestration |
-| `teampass-api.js` | TeamPass HTTP/API adapter and response normalization |
-| `content.js` | page-side login-field discovery, fill and credential detection |
-| `field-policy.js` | field classification and allow/deny policy |
-| `i18n.js` | runtime German/English strings |
-| `popup.html / popup.js` | toolbar user interface and entry selection |
-| `options.html / options.js` | configuration, connection test, import/export and policies |
-| `network-auth.*` | HTTP authentication prompt |
-| `theme.css / style.css` | shared and popup presentation |
-| `icons/` | extension icons |
+| `background.js` | runtime messaging, vault, lookup, saving, HTTP Basic, and session state |
+| `teampass-api.js` | centralized TeamPass endpoints, methods, payloads, and response normalization |
+| `content.js` | form discovery, autofill, page dialogs, and credential detection |
+| `field-policy.js` | centralized sign-in field signatures and exclusion rules |
+| `i18n.js` | runtime localization and English fallback |
+| `_locales/*/messages.json` | German and English translations |
+| `popup.*` | toolbar popup and entry selection |
+| `options.*` | settings, diagnostics, and API self-test |
+| `network-auth.*` | HTTP Basic selection, unlock, and manual input |
+| `theme.css` | centralized design tokens and colors |
+| `style.css`, `network-auth.css` | structural layout using theme variables |
+| `tests/test-i18n-completeness.js` | locale-key parity and prevention of known hard-coded German UI text |
 
-## Data flow
-1. `content.js` detects the page and fields.
-2. `popup.js` asks the background process for matching items.
-3. `background.js` checks vault/session state and calls `teampass-api.js`.
-4. Results are normalized and displayed in the popup.
-5. After selection, the background process sends only the required record to the active tab.
+## Security-sensitive storage
 
-## Manifests
-`manifest.chromium.json` uses a service worker. `manifest.firefox.json` uses background scripts and carries the Gecko ID. The build copies each one as `manifest.json` into a separate target directory.
-
-## Permissions
-`storage` stores settings and encrypted local data; `tabs`, `activeTab`, and `scripting` coordinate the active tab; `webRequest` and `webRequestAuthProvider` support network authentication; `alarms` provides timed locking. Host permissions are broad because arbitrary target sites and self-hosted TeamPass URLs are supported. Store submissions should explicitly justify this design.
+- `storage.local`: non-secret settings and encrypted vault data.
+- `storage.session`: unlocked session data, short-lived matches, and caches.
+- API queue: control metadata only; never passwords, tokens, JWTs, or request payloads.
 
 ## Tests
-Node tests in `tests/` cover the API layer, field rules, folder logic, and multi-step login. Python checks validate options and source structure. `python3 build.py --check` runs checks without packaging.
 
----
+Run the complete local validation with:
+
+```bash
+python3 build.py --check
+```
+
+Run the localization test separately with:
+
+```bash
+node tests/test-i18n-completeness.js
+```
+
+Expected output:
+
+```text
+i18n completeness: PASS
+```
+
 **Menu:** [Home](README.md) · [Installation](installation.md) · [Usage](user-guide.md) · [Build](build.md) · [Safari](safari.md) · [Technical](technical.md) · [Security](security.md) · [Troubleshooting](troubleshooting.md) · [Deutsch](../de/README.md)
-
----

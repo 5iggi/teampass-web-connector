@@ -2,43 +2,79 @@
 
 **Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
 
----
-
 ## Architektur
-Die Erweiterung ist eine WebExtension mit Manifest V3. Popup und Optionsseite senden Nachrichten an den Hintergrundprozess. Der Hintergrundprozess hält Konfiguration und Tresorzustand, spricht über `teampass-api.js` mit TeamPass und kommuniziert mit dem Content Script der aktiven Seite. Browserunterschiede werden über getrennte Manifeste und die `browser`/`chrome`-Abstraktion behandelt.
 
-## Dateien
+TeamPass Web Connector ist eine Manifest-V3-WebExtension. Popup und Einstellungsseite kommunizieren über Runtime-Nachrichten mit dem Background-Prozess. Der Background-Prozess verwaltet Konfiguration, Tresorzustand, API-Aufrufe, HTTP-Basic-Anfragen und Sitzungs-Caches. Das Content-Script erkennt Formularfelder und blendet die Seitendialoge ein.
+
+## Internationalisierung
+
+Alle benutzersichtbaren Texte gehören in:
+
+```text
+src/_locales/de/messages.json
+src/_locales/en/messages.json
+```
+
+Englisch ist im Manifest als `default_locale` festgelegt. `src/i18n.js` stellt `tpI18n.t()` bereit und wendet `data-i18n` sowie `data-i18n-placeholder` auf statische HTML-Elemente an. Dynamische Dialoge verwenden ebenfalls ausschließlich Übersetzungsschlüssel.
+
+Platzhalter werden über die WebExtension-i18n-API ersetzt, zum Beispiel:
+
+```javascript
+tpI18n.t('matches', count)
+tpI18n.t('storageLocation', folderName)
+tpI18n.t('errorPrefix', errorMessage)
+```
+
+Bei neuen UI-Texten müssen immer beide Sprachdateien aktualisiert werden. Benutzertexte dürfen nicht direkt deutsch oder englisch in JavaScript fest codiert werden.
+
+## Lebenszyklus der Content-Scripts
+
+Beim Aktualisieren oder Neuladen einer Erweiterung verliert ein bereits injiziertes Content-Script seinen Extension-Kontext. `content.js` erkennt diesen Zustand, beendet Timer und MutationObserver und entfernt eigene UI-Elemente. Der Tab muss anschließend neu geladen werden, damit das neue Content-Script aktiv wird.
+
+Ein gesperrter Tresor ist ein regulärer Zustand. Automatische Speichervorgänge lesen nur nicht geheime Optionen aus `storage.local`; API-Zugriffe und der Speicherdialog werden erst nach dem Entsperren ausgeführt.
+
+## Wichtige Dateien
+
 | Datei | Aufgabe |
 |---|---|
-| `background-loader.js` | Chromium service-worker loader |
-| `background.js` | central message, session, vault, search, save and network-auth orchestration |
-| `teampass-api.js` | TeamPass HTTP/API adapter and response normalization |
-| `content.js` | page-side login-field discovery, fill and credential detection |
-| `field-policy.js` | field classification and allow/deny policy |
-| `i18n.js` | runtime German/English strings |
-| `popup.html / popup.js` | toolbar user interface and entry selection |
-| `options.html / options.js` | configuration, connection test, import/export and policies |
-| `network-auth.*` | HTTP authentication prompt |
-| `theme.css / style.css` | shared and popup presentation |
-| `icons/` | extension icons |
+| `background-loader.js` | Chromium-Service-Worker-Loader |
+| `background.js` | Runtime-Nachrichten, Tresor, Suche, Speicherung, HTTP-Basic und Sitzungsstatus |
+| `teampass-api.js` | zentrale TeamPass-API-Endpunkte, Methoden, Payloads und Antwortnormalisierung |
+| `content.js` | Formularerkennung, Autofill, Seitendialoge und Zugangsdaten-Erkennung |
+| `field-policy.js` | zentrale Erkennungs- und Ausschlussregeln für Loginfelder |
+| `i18n.js` | Laufzeitübersetzung und englischer Fallback |
+| `_locales/*/messages.json` | deutsche und englische Übersetzungen |
+| `popup.*` | Symbolleisten-Popup und Trefferauswahl |
+| `options.*` | Einstellungen, Diagnose und API-Selbsttest |
+| `network-auth.*` | HTTP-Basic-Auswahl, Entsperrung und manuelle Eingabe |
+| `theme.css` | zentrale Designwerte und Farben |
+| `style.css`, `network-auth.css` | strukturelles Layout mit Theme-Variablen |
+| `tests/test-i18n-completeness.js` | Abgleich der Sprachschlüssel und Schutz vor bekannten fest codierten deutschen UI-Texten |
 
-## Datenfluss
-1. `content.js` erkennt Seite und Felder.
-2. `popup.js` fordert passende Einträge beim Hintergrundprozess an.
-3. `background.js` prüft Tresor/Session und ruft `teampass-api.js` auf.
-4. Ergebnisse werden normalisiert und im Popup angezeigt.
-5. Nach Auswahl sendet der Hintergrundprozess nur den benötigten Datensatz an den aktiven Tab.
+## Sicherheitsrelevante Speicherbereiche
 
-## Manifeste
-`manifest.chromium.json` nutzt einen Service Worker. `manifest.firefox.json` nutzt Hintergrundskripte und enthält die Gecko-ID. Beide werden beim Build als `manifest.json` in getrennte Zielordner kopiert.
-
-## Berechtigungen
-`storage` speichert Einstellungen und verschlüsselte lokale Daten; `tabs`, `activeTab` und `scripting` koordinieren den aktiven Tab; `webRequest` und `webRequestAuthProvider` dienen der Netzwerkanmeldung; `alarms` der zeitgesteuerten Sperre. Die Host-Berechtigungen sind breit, weil beliebige Zielseiten und selbst gehostete TeamPass-URLs unterstützt werden. Für Store-Veröffentlichungen sollte diese Entscheidung ausdrücklich begründet werden.
+- `storage.local`: nicht geheime Einstellungen und verschlüsselte Tresordaten.
+- `storage.session`: entsperrte Sitzungsdaten, kurzlebige Treffer und Caches.
+- API-Queue: nur Steuerdaten; keine Kennwörter, Tokens, JWTs oder Request-Payloads.
 
 ## Tests
-Node-Tests in `tests/` prüfen API-Schicht, Feldregeln, Ordnerlogik und mehrstufige Anmeldung. Python-Prüfungen validieren Optionen und Quellstruktur. `python3 build.py --check` führt alle Prüfungen ohne Paketbau aus.
 
----
+Der vollständige lokale Prüfpfad lautet:
+
+```bash
+python3 build.py --check
+```
+
+Für die Internationalisierung kann der Test separat ausgeführt werden:
+
+```bash
+node tests/test-i18n-completeness.js
+```
+
+Erwartete Ausgabe:
+
+```text
+i18n completeness: PASS
+```
+
 **Menü:** [Start](README.md) · [Installation](installation.md) · [Anwendung](user-guide.md) · [Erstellen](build.md) · [Safari](safari.md) · [Technik](technical.md) · [Sicherheit](security.md) · [Fehlerbehebung](troubleshooting.md) · [English](../en/README.md)
-
----
