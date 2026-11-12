@@ -387,5 +387,252 @@
   },
   "untitled": {
     "message": "(untitled)"
+  },
+  "lockedDialogTitle": {
+    "message": "TeamPass is locked"
+  },
+  "lockedDialogText": {
+    "message": "Enter the local master passphrase to continue."
+  },
+  "close": {
+    "message": "Close"
+  },
+  "chooserAria": {
+    "message": "Select TeamPass entry"
+  },
+  "noUsername": {
+    "message": "No username"
+  },
+  "entryActionsHint": {
+    "message": "Click: fill, right-click: update data"
+  },
+  "noVisibleFields": {
+    "message": "No visible sign-in fields found."
+  },
+  "itemMissingCredentials": {
+    "message": "The API item contains neither a username nor a password."
+  },
+  "noMatchingItems": {
+    "message": "No matching TeamPass entries found."
+  },
+  "searchWaiting": {
+    "message": "TeamPass search will retry in $SECONDS$ seconds.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchFailed": {
+    "message": "TeamPass search failed"
+  },
+  "credentialsInserted": {
+    "message": "Credentials inserted"
+  },
+  "passwordLabel": {
+    "message": "Password"
+  },
+  "urlLabel": {
+    "message": "URL"
+  },
+  "currentCredentialsApplied": {
+    "message": "Currently detected credentials were applied."
+  },
+  "openItemHint": {
+    "message": "Click: update, right-click: open in TeamPass"
+  },
+  "itemOpenedCopied": {
+    "message": "TeamPass opened; item ID $ID$ was copied.",
+    "placeholders": {
+      "id": {
+        "content": "$1"
+      }
+    }
+  },
+  "targetFolder": {
+    "message": "Target: $FOLDER$",
+    "placeholders": {
+      "folder": {
+        "content": "$1"
+      }
+    }
+  },
+  "noMatchingFolders": {
+    "message": "No matching folders."
+  },
+  "chooseParentFolder": {
+    "message": "Select a parent folder first."
+  },
+  "newFolderPrompt": {
+    "message": "Name of the new subfolder:"
+  },
+  "folderCreating": {
+    "message": "Creating folder …"
+  },
+  "folderCreatedNoId": {
+    "message": "The folder was created, but TeamPass did not return a new folder ID."
+  },
+  "folderCreatedSelected": {
+    "message": "Folder created and selected: $FOLDER$",
+    "placeholders": {
+      "folder": {
+        "content": "$1"
+      }
+    }
+  },
+  "saving": {
+    "message": "Saving …"
+  },
+  "updatedSuccess": {
+    "message": "Updated."
+  },
+  "savedItemSuccess": {
+    "message": "Saved."
+  },
+  "passwordStrengthLow": {
+    "message": "The password does not meet the target folder minimum strength. Use a stronger password or choose a folder with a lower requirement."
+  },
+  "errorPrefix": {
+    "message": "Error: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "capturedDescription": {
+    "message": "Saved by the browser on $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "notConnected": {
+    "message": "Not connected"
+  },
+  "noNormalWebAddress": {
+    "message": "No regular web address. Loading all entries."
+  },
+  "noDataDetected": {
+    "message": "No credentials detected"
+  },
+  "serverUrlMissing": {
+    "message": "Server URL is missing"
+  },
+  "urlMissing": {
+    "message": "URL is missing"
+  },
+  "copied": {
+    "message": "$LABEL$ copied",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      }
+    }
+  },
+  "missing": {
+    "message": "$LABEL$ is missing",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      }
+    }
+  },
+  "itemsFound": {
+    "message": "$COUNT$ entries found",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkingConnection": {
+    "message": "Checking connection …"
+  },
+  "savingSettings": {
+    "message": "Saving settings …"
+  },
+  "vaultNotConfigured": {
+    "message": "Not configured"
+  },
+  "vaultMigrationRequired": {
+    "message": "Migration required"
+  },
+  "vaultUnlocking": {
+    "message": "Unlocking vault …"
+  },
+  "vaultUnlockedCache": {
+    "message": "Vault unlocked; building the HTTP Basic cache."
+  },
+  "extensionLockedSuccess": {
+    "message": "Extension locked."
+  },
+  "httpCacheSynced": {
+    "message": "HTTP Basic cache synchronized: $KEYS$ URL keys, $ENTRIES$ mappings",
+    "placeholders": {
+      "keys": {
+        "content": "$1"
+      },
+      "entries": {
+        "content": "$2"
+      }
+    }
+  },
+  "cacheKeys": {
+    "message": "$COUNT$ cache keys",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "cacheDetails": {
+    "message": "Cache keys: $COUNT$\nCreated: $DATE$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      }
+    }
+  },
+  "notYet": {
+    "message": "not yet"
+  },
+  "logEntries": {
+    "message": "$COUNT$ log entries",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hitsCache": {
+    "message": "$COUNT$ matches; cache $BEFORE$ → $AFTER$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "before": {
+        "content": "$2"
+      },
+      "after": {
+        "content": "$3"
+      }
+    }
+  },
+  "noUser": {
+    "message": "(no user)"
+  },
+  "networkAuthExplanation": {
+    "message": "Enter credentials in this TeamPass window so they can be queued for saving after successful sign-in."
+  },
+  "folderWord": {
+    "message": "Folder"
+  },
+  "updateData": {
+    "message": "Update data"
   }
 }

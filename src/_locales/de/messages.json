@@ -387,5 +387,252 @@
   },
   "untitled": {
     "message": "(ohne Titel)"
+  },
+  "lockedDialogTitle": {
+    "message": "TeamPass ist gesperrt"
+  },
+  "lockedDialogText": {
+    "message": "Lokale Master-Passphrase eingeben, um fortzufahren."
+  },
+  "close": {
+    "message": "Schließen"
+  },
+  "chooserAria": {
+    "message": "TeamPass-Eintrag auswählen"
+  },
+  "noUsername": {
+    "message": "Kein Benutzername"
+  },
+  "entryActionsHint": {
+    "message": "Klick: ausfüllen, Rechtsklick: Daten aktualisieren"
+  },
+  "noVisibleFields": {
+    "message": "Keine sichtbaren Anmeldefelder gefunden."
+  },
+  "itemMissingCredentials": {
+    "message": "Der API-Eintrag enthält weder Benutzername noch Passwort."
+  },
+  "noMatchingItems": {
+    "message": "Keine passenden TeamPass-Einträge gefunden."
+  },
+  "searchWaiting": {
+    "message": "TeamPass-Suche wartet noch $SECONDS$ Sekunden.",
+    "placeholders": {
+      "seconds": {
+        "content": "$1"
+      }
+    }
+  },
+  "searchFailed": {
+    "message": "TeamPass-Suche fehlgeschlagen"
+  },
+  "credentialsInserted": {
+    "message": "Zugangsdaten eingefügt"
+  },
+  "passwordLabel": {
+    "message": "Passwort"
+  },
+  "urlLabel": {
+    "message": "URL"
+  },
+  "currentCredentialsApplied": {
+    "message": "Aktuell erkannte Zugangsdaten wurden übernommen."
+  },
+  "openItemHint": {
+    "message": "Klick: aktualisieren, Rechtsklick: in TeamPass öffnen"
+  },
+  "itemOpenedCopied": {
+    "message": "TeamPass geöffnet; Eintrags-ID $ID$ wurde kopiert.",
+    "placeholders": {
+      "id": {
+        "content": "$1"
+      }
+    }
+  },
+  "targetFolder": {
+    "message": "Ziel: $FOLDER$",
+    "placeholders": {
+      "folder": {
+        "content": "$1"
+      }
+    }
+  },
+  "noMatchingFolders": {
+    "message": "Keine passenden Ordner."
+  },
+  "chooseParentFolder": {
+    "message": "Zuerst einen übergeordneten Ordner wählen."
+  },
+  "newFolderPrompt": {
+    "message": "Name des neuen Unterordners:"
+  },
+  "folderCreating": {
+    "message": "Ordner wird erstellt …"
+  },
+  "folderCreatedNoId": {
+    "message": "Ordner wurde erstellt, aber TeamPass hat keine neue Ordner-ID geliefert."
+  },
+  "folderCreatedSelected": {
+    "message": "Ordner erstellt und ausgewählt: $FOLDER$",
+    "placeholders": {
+      "folder": {
+        "content": "$1"
+      }
+    }
+  },
+  "saving": {
+    "message": "Speichere …"
+  },
+  "updatedSuccess": {
+    "message": "Aktualisiert."
+  },
+  "savedItemSuccess": {
+    "message": "Gespeichert."
+  },
+  "passwordStrengthLow": {
+    "message": "Das Passwort erfüllt die Mindeststärke des Zielordners nicht. Passwort verstärken oder einen Ordner mit niedrigerer Vorgabe wählen."
+  },
+  "errorPrefix": {
+    "message": "Fehler: $ERROR$",
+    "placeholders": {
+      "error": {
+        "content": "$1"
+      }
+    }
+  },
+  "capturedDescription": {
+    "message": "Vom Browser gespeichert am $DATE$",
+    "placeholders": {
+      "date": {
+        "content": "$1"
+      }
+    }
+  },
+  "notConnected": {
+    "message": "Nicht verbunden"
+  },
+  "noNormalWebAddress": {
+    "message": "Keine normale Webadresse. Lade alle Einträge."
+  },
+  "noDataDetected": {
+    "message": "Keine Daten erkannt"
+  },
+  "serverUrlMissing": {
+    "message": "Server-URL fehlt"
+  },
+  "urlMissing": {
+    "message": "URL fehlt"
+  },
+  "copied": {
+    "message": "$LABEL$ kopiert",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      }
+    }
+  },
+  "missing": {
+    "message": "$LABEL$ fehlt",
+    "placeholders": {
+      "label": {
+        "content": "$1"
+      }
+    }
+  },
+  "itemsFound": {
+    "message": "$COUNT$ Einträge gefunden",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "checkingConnection": {
+    "message": "Verbindung wird geprüft …"
+  },
+  "savingSettings": {
+    "message": "Einstellungen werden gespeichert …"
+  },
+  "vaultNotConfigured": {
+    "message": "Nicht eingerichtet"
+  },
+  "vaultMigrationRequired": {
+    "message": "Migration erforderlich"
+  },
+  "vaultUnlocking": {
+    "message": "Tresor wird entsperrt …"
+  },
+  "vaultUnlockedCache": {
+    "message": "Tresor entsperrt; HTTP-Basic-Cache wird aufgebaut."
+  },
+  "extensionLockedSuccess": {
+    "message": "Erweiterung wurde gesperrt."
+  },
+  "httpCacheSynced": {
+    "message": "HTTP-Basic-Cache synchronisiert: $KEYS$ URL-Schlüssel, $ENTRIES$ Zuordnungen",
+    "placeholders": {
+      "keys": {
+        "content": "$1"
+      },
+      "entries": {
+        "content": "$2"
+      }
+    }
+  },
+  "cacheKeys": {
+    "message": "$COUNT$ Cache-Schlüssel",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "cacheDetails": {
+    "message": "Cache-Schlüssel: $COUNT$\nErstellt: $DATE$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "date": {
+        "content": "$2"
+      }
+    }
+  },
+  "notYet": {
+    "message": "noch nicht"
+  },
+  "logEntries": {
+    "message": "$COUNT$ Protokolleinträge",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      }
+    }
+  },
+  "hitsCache": {
+    "message": "$COUNT$ Treffer; Cache $BEFORE$ → $AFTER$",
+    "placeholders": {
+      "count": {
+        "content": "$1"
+      },
+      "before": {
+        "content": "$2"
+      },
+      "after": {
+        "content": "$3"
+      }
+    }
+  },
+  "noUser": {
+    "message": "(kein Benutzer)"
+  },
+  "networkAuthExplanation": {
+    "message": "Die Eingabe erfolgt in diesem TeamPass-Fenster, damit die Zugangsdaten nach erfolgreicher Anmeldung zum Speichern vorgemerkt werden können."
+  },
+  "folderWord": {
+    "message": "Ordner"
+  },
+  "updateData": {
+    "message": "Daten aktualisieren"
   }
 }
